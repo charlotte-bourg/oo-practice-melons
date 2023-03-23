@@ -120,3 +120,20 @@ def get_sellability_report(melons):
             selling_string = "(CAN BE SOLD)"
         else: selling_string = "(NOT SELLABLE)"
         print(f"Harvested by {melon.harvester} from Field {melon.harvest_field} {selling_string}")
+
+def read_harvest_log():
+    harvest_log_list = []
+    melon_types_list = make_melon_types()
+    melon_types_by_id = make_melon_type_lookup(melon_types_list)
+    with open("harvest_log.txt") as f:
+        for line in f:
+            line = line.strip()
+            line = line.split()
+            melon_type = melon_types_by_id[line[5]]
+            shape = line[1]
+            color = line[3]
+            harvest_field = line[11]
+            harvester = line[8]
+            harvest_log_list.append(Melon(melon_type, shape, color, harvest_field, harvester))
+    return harvest_log_list
+
